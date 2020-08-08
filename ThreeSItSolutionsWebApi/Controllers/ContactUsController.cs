@@ -83,9 +83,26 @@ namespace ThreeSItSolutionsWebApi.Controllers
         [HttpPost]
         public async Task<ActionResult<MContactUs>> PostMContactUs([FromBody] MContactUs mContactUs)
         {
+            if (mContactUs.CName== null)
+            {
+                return BadRequest();
+            }
+            else if (mContactUs.CEmailId == null)
+            {
+                return BadRequest();
+            }
+            else if (mContactUs.CSubject == null)
+            {
+                return BadRequest();
+            }
+            else if (mContactUs.CMessage == null)
+            {
+                return BadRequest();
+            }
+
             _context.MContactUs.Add(mContactUs);
             await _context.SaveChangesAsync();
-            SendMail(mContactUs.CEmailId, mContactUs.CSubject, mContactUs.CMessage, mContactUs.CName);
+            //SendMail(mContactUs.CEmailId, mContactUs.CSubject, mContactUs.CMessage, mContactUs.CName);
 
             return CreatedAtAction("GetMContactUs", new { id = mContactUs.IID }, mContactUs);
         }
